@@ -1,80 +1,95 @@
 class Vector {
+  // takes x and y. if aren't passed, take as 0
   constructor(x, y) {
-    // takes x and y. if aren't passed, take as 0
     this.x = x || 0;
     this.y = y || 0;
   }
+
+  // adds vec to this
   add(vec) {
-    // adds vec to this
     return new Vector(this.x + vec.x, this.y + vec.y);
   }
+
+  // subtracts vec from this
   sub(vec) {
-    // subtracts vec from this
     return new Vector(this.x - vec.x, this.y - vec.y);
   }
+
+  // multiplies this to num
   mul(num) {
-    // multiplies this to num
     return new Vector(this.x * num, this.y * num);
   }
+
+  // devid this to num
   div(num) {
-    // devid this to num
     return new Vector(this.x / num, this.y / num);
   }
+
+  // length of this
   len() {
-    // length of this
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
   }
+
+  // length square of this
   lensq() {
-    // length square of this
     return Math.pow(this.x, 2) + Math.pow(this.y, 2);
   }
+
+  // reduce its length to 1
   norm() {
-    // reduce its length to 1
     return this.div(this.len());
   }
+
+  // dot product
   dot(vec) {
-    // dot product
     return this.x * vec.x + this.y * vec.y;
   }
+
+  // cross product
   cross(vec) {
-    // cross product
     return this.x * vec.y - this.y * vec.x;
   }
+
+  // return the angle of this in radians
   direction() {
-    // return the angle of this in radians
     return Math.atan2(this.y, this.x);
   }
+
+  // set the direction of this in radians
   setDirection(direction) {
-    // set the direction of this in radians
     let l = this.len();
     this.x = Math.cos(direction) * l;
     this.y = Math.sin(direction) * l;
     return this;
   }
+
+  // returns smallest positive (y and x) vector if length is 0
   no0() {
-    // returns smallest positive (y and x) vector if length is 0
     if (this.len() == 0) {
       this.x = Number.MIN_VALUE;
       this.y = Number.MIN_VALUE;
     }
     return this;
   }
+
+  //rise its len to minlen
   min(minlen) {
-    //rise its len to minlen
     if (this.len() < minlen) {
       return this.norm().mul(minlen);
     }
     return this;
   }
+
+  //rise its len to minlen
   max(maxlen) {
-    //rise its len to minlen
     if (this.len() > maxlen) {
       return this.norm().mul(maxlen);
     }
     return this;
   }
+
+  // clamps x to an interval
   clampX(minX, maxX) {
-    // clamps x to an interval
     if (this.x < minX) {
       this.x = minX;
     } else if (this.x > maxX) {
@@ -82,8 +97,9 @@ class Vector {
     }
     return this;
   }
+
+  // clamps y to an interval
   clampY(minY, maxY) {
-    // clamps y to an interval
     if (this.y < minY) {
       this.y = minY;
     } else if (this.y > maxY) {
@@ -91,9 +107,15 @@ class Vector {
     }
     return this;
   }
+
+  // shorthand for .min().max()
   clampLen(minLen, maxLen) {
-    // shorthand for .min().max()
     return this.min(minLen).max(maxLen);
+  }
+
+  // returns vector to given vector
+  vectorTo(vec) {
+    return vec.sub(this);
   }
 }
 

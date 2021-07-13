@@ -73,6 +73,28 @@ class Vector {
     }
     return this;
   }
+  clampX(minX, maxX) {
+    // clamps x to an interval
+    if (this.x < minX) {
+      this.x = minX;
+    } else if (this.x > maxX) {
+      this.x = maxX;
+    }
+    return this;
+  }
+  clampY(minY, maxY) {
+    // clamps y to an interval
+    if (this.y < minY) {
+      this.y = minY;
+    } else if (this.y > maxY) {
+      this.y = maxY;
+    }
+    return this;
+  }
+  clampLen(minLen, maxLen) {
+    // shorthand for .min().max()
+    return this.min(minLen).max(maxLen);
+  }
 }
 
 // export { Vector };

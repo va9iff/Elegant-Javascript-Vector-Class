@@ -40,14 +40,6 @@ class Vector {
     // cross product
     return this.x * vec.y - this.y * vec.x;
   }
-  no0() {
-    // returns smallest positive (y and x) vector if length is 0
-    if (this.len() == 0) {
-      this.x = Number.MIN_VALUE;
-      this.y = Number.MIN_VALUE;
-    }
-    return this;
-  }
   direction() {
     // return the angle of this in radians
     return Math.atan2(this.y, this.x);
@@ -57,6 +49,32 @@ class Vector {
     let l = this.len();
     this.x = Math.cos(direction) * l;
     this.y = Math.sin(direction) * l;
+    return this;
+  }
+  no0() {
+    // returns smallest positive (y and x) vector if length is 0
+    if (this.len() == 0) {
+      this.x = Number.MIN_VALUE;
+      this.y = Number.MIN_VALUE;
+    }
+    return this;
+  }
+  min(minlen) {
+    // if length is less than minlen, rise it to minlen
+    if (this.len() < minlen) {
+      multiplier = minlen / this.len();
+      this.x *= multiplier;
+      this.y *= multiplier;
+    }
+    return this;
+  }
+  max(maxlen) {
+    // if length is more than maxlen, decrease it to maxlen
+    if (this.len() > maxlen) {
+      multiplier = this.len() / maxlen;
+      this.x *= multiplier;
+      this.y *= multiplier;
+    }
     return this;
   }
 }

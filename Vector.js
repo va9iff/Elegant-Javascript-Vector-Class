@@ -117,6 +117,11 @@ class Vector {
   vectorTo(vec) {
     return vec.sub(this);
   }
+
+  // returns distance to vec
+  distance_to(vec) {
+    return this.vectorTo(vec).len();
+  }
 }
 
 // export { Vector };

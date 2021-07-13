@@ -60,20 +60,16 @@ class Vector {
     return this;
   }
   min(minlen) {
-    // if length is less than minlen, rise it to minlen
+    //rise its len to minlen
     if (this.len() < minlen) {
-      multiplier = minlen / this.len();
-      this.x *= multiplier;
-      this.y *= multiplier;
+      return this.norm().mul(minlen);
     }
     return this;
   }
   max(maxlen) {
-    // if length is more than maxlen, decrease it to maxlen
+    //rise its len to minlen
     if (this.len() > maxlen) {
-      multiplier = this.len() / maxlen;
-      this.x *= multiplier;
-      this.y *= multiplier;
+      return this.norm().mul(maxlen);
     }
     return this;
   }

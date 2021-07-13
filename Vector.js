@@ -29,7 +29,7 @@ class Vector {
     return Math.pow(this.x, 2) + Math.pow(this.y, 2);
   }
   norm() {
-    // reduce its length to 1s
+    // reduce its length to 1
     return this.div(this.len());
   }
   dot(vec) {
@@ -41,7 +41,7 @@ class Vector {
     return this.x * vec.y - this.y * vec.x;
   }
   no0() {
-    // returns smallest positive (y and x) vector if length of this is 0
+    // returns smallest positive (y and x) vector if length is 0
     if (this.len() == 0) {
       this.x = Number.MIN_VALUE;
       this.y = Number.MIN_VALUE;
@@ -60,6 +60,5 @@ class Vector {
     return this;
   }
 }
-export { Vector };
 
-// import { Vector } from "./vector.js"; //include this in your fike
+export { Vector };

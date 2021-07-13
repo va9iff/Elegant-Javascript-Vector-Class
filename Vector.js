@@ -37,7 +37,7 @@ class Vector {
     return this.x * vec.x + this.y * vec.y;
   }
   cross(vec) {
-    // Cross product
+    // cross product
     return this.x * vec.y - this.y * vec.x;
   }
   no0() {
@@ -49,11 +49,11 @@ class Vector {
     return this;
   }
   direction() {
-    // return the angle of the vector in radians
+    // return the angle of this in radians
     return Math.atan2(this.y, this.x);
   }
   setDirection(direction) {
-    // set the direction of the vector in radians
+    // set the direction of this in radians
     let l = this.len();
     this.x = Math.cos(direction) * l;
     this.y = Math.sin(direction) * l;
@@ -61,4 +61,6 @@ class Vector {
   }
 }
 
-export { Vector };
+// export { Vector };
+
+// import { Vector } from "./vector.js"; //include this in your fike

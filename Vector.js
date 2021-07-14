@@ -11,39 +11,42 @@ class Vector {
   // r = return value
 
   //r: V; reconstructs the new vector from "this"
+  //arg: valid arguments.
   re() {
     return new Vector(this.x, this.y);
   }
 
   //r: V added vec
-  add(vec) {
+  //param: Vector || a number for both x and y || 2 number for x and y
+  add(vec = new Vector(1, 1), maybeY) {
     let V = this.re();
-    V.x += vec.x;
-    V.y += vec.y;
+    V.x += vec.x || vec;
+    V.y += maybeY || vec.y || vec;
     return V;
   }
 
   //r: V subtracted vec
-  sub(vec) {
+  //param: Vector || a number for x and y || 2 number for each
+  sub(vec = new Vector(1, 1), maybeY) {
     let V = this.re();
-    V.x -= vec.x;
-    V.y -= vec.y;
+    V.x -= vec.x || vec;
+    V.y -= maybeY || vec.y || vec;
     return V;
   }
 
   //r: V multiplied with num
   mul(num) {
     let V = this.re();
-    V.x *= num;
-    V.y *= num;
+    V.x *= num || 1;
+    V.y *= num || 1;
     return V;
   }
 
   //r: V devided to num
   div(num) {
     let V = this.re();
-    V.x /= num;
-    V.y /= num;
+    V.x /= num || 1;
+    V.y /= num || 1;
     return V;
   }
 
@@ -92,7 +95,7 @@ class Vector {
   //r: V with given angle
   setAngle(angle) {
     let V = this.re();
-    let l = this.len();
+    let l = V.len();
     V.x = Math.cos(angle) * l;
     V.y = Math.sin(angle) * l;
     return V;
@@ -101,8 +104,8 @@ class Vector {
   //r: V rotated by angle
   rotate(angle) {
     let V = this.re();
-    let l = this.len();
-    let a = this.angle();
+    let l = V.len();
+    let a = V.angle();
     V.x = Math.cos(angle + a) * l;
     V.y = Math.sin(angle + a) * l;
     return V;
@@ -198,7 +201,6 @@ class Vector {
   }
   // we can also use other functions with names like
   // u.op("setAngle", Math.PI / 4); u.op("len", null);
-  // but can make you confused with argument counts. avoid using like this.
 }
 
 // making math function accessable with [" "]

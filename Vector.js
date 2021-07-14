@@ -51,6 +51,10 @@ class Vector {
   }
 
   // ortogonal projection (soon)
+  projectTo(vec) {
+    return vec.norm().mul(this.dot(vec.norm()));
+    // return b.mul(this.dot(b) / b.dot(b)); //is also valid
+  }
 
   // return the angle of this in radians
   angle() {
@@ -150,7 +154,7 @@ class Vector {
   }
   // we can also use other functions with names like
   // u.op("setAngle", Math.PI / 4); u.op("len", null);
-  // but can make you confused with argument counts. so, use with maths.
+  // but can make you confused with argument counts. avoid to using like this.
 }
 
 // making math function accessable with [" "]

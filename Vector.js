@@ -11,42 +11,39 @@ class Vector {
   // r = return value
 
   //r: V; reconstructs the new vector from "this"
-  //arg: valid arguments.
   re() {
     return new Vector(this.x, this.y);
   }
 
   //r: V added vec
-  //param: Vector || a number for both x and y || 2 number for x and y
-  add(vec = new Vector(1, 1), maybeY) {
+  add(vecOrX = 0, maybeY = 0) {
     let V = this.re();
-    V.x += vec.x || vec;
-    V.y += maybeY || vec.y || vec;
+    V.x += vecOrX.x || vecOrX;
+    V.y += vecOrX.y || maybeY;
     return V;
   }
 
   //r: V subtracted vec
-  //param: Vector || a number for x and y || 2 number for each
-  sub(vec = new Vector(1, 1), maybeY) {
+  sub(vecOrX = 0, maybeY = 0) {
     let V = this.re();
-    V.x -= vec.x || vec;
-    V.y -= maybeY || vec.y || vec;
+    V.x -= vecOrX.x || vecOrX;
+    V.y -= vecOrX.y || maybeY;
     return V;
   }
 
   //r: V multiplied with num
-  mul(num) {
+  mul(num = 1) {
     let V = this.re();
-    V.x *= num || 1;
-    V.y *= num || 1;
+    V.x *= num;
+    V.y *= num;
     return V;
   }
 
   //r: V devided to num
-  div(num) {
+  div(num = 1) {
     let V = this.re();
-    V.x /= num || 1;
-    V.y /= num || 1;
+    V.x /= num;
+    V.y /= num;
     return V;
   }
 
@@ -201,20 +198,22 @@ class Vector {
   }
   // we can also use other functions with names like
   // u.op("setAngle", Math.PI / 4); u.op("len", null);
+  // but it can confilect with parameter counts.
 }
 
 // making math function accessable with [" "]
-// eg: u["*"](4)["+"](v)
-Vector.prototype["+"] = function (arg) {
-  return this.add(arg);
+// eg: a = u["+"](v)["-"](9, 8)["*"](4);
+
+Vector.prototype["+"] = function () {
+  return this.add(...arguments);
 };
-Vector.prototype["-"] = function (arg) {
-  return this.sub(arg);
+Vector.prototype["-"] = function () {
+  return this.sub(...arguments);
 };
-Vector.prototype["*"] = function (arg) {
-  return this.mul(arg);
+Vector.prototype["*"] = function () {
+  return this.mul(...arguments);
 };
-Vector.prototype["/"] = function (arg) {
+Vector.prototype["/"] = function (...arguments) {
   return this.div(arg);
 };
 

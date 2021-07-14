@@ -103,6 +103,11 @@ class Vector {
     return this;
   }
 
+  // return a vector with given len
+  setLen(newLen) {
+    return this.min(newLen).max(newLen);
+  }
+
   // clamps x to an interval
   clampX(minX, maxX) {
     if (this.x < minX) {

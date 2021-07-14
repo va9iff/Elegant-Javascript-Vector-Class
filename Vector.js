@@ -1,3 +1,5 @@
+// not tested every function after huge new V update
+
 class Vector {
   // takes x and y. if aren't passed, take as 0
   constructor(x, y) {
@@ -8,7 +10,7 @@ class Vector {
   // V = a new Vector that is equal to "this"
   // r = return value
 
-  //r: V
+  //r: V; reconstructs the new vector from "this"
   re() {
     return new Vector(this.x, this.y);
   }
@@ -47,45 +49,50 @@ class Vector {
 
   //r: V's length
   len() {
-    return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+    let V = this.re();
+    return Math.sqrt(Math.pow(V.x, 2) + Math.pow(V.y, 2));
   }
 
   //r: V's length square
   lensq() {
-    return Math.pow(this.x, 2) + Math.pow(this.y, 2);
+    let V = this.re();
+    return Math.pow(V.x, 2) + Math.pow(V.y, 2);
   }
 
   //r: V with length = 1
   norm() {
-    return this.div(this.len());
+    let V = this.re();
+    return V.div(V.len());
   }
 
   //r: dot product of V and vec
   dot(vec) {
-    return this.x * vec.x + this.y * vec.y;
+    let V = this.re();
+    return V.x * vec.x + V.y * vec.y;
   }
 
   //r: cross product of V and vec
   cross(vec) {
-    return this.x * vec.y - this.y * vec.x;
+    let V = this.re();
+    return V.x * vec.y - V.y * vec.x;
   }
 
   //r: projection V onto vec
   projectTo(vec) {
-    return vec.norm().mul(this.dot(vec.norm()));
-    // return vec.mul(this.dot(vec) / vec.dot(vec)); //is also valid
+    let V = this.re();
+    return vec.norm().mul(V.dot(vec.norm()));
   }
 
   //r: angle of V in radians
   angle() {
-    return Math.atan2(this.y, this.x);
+    let V = this.re();
+    return Math.atan2(V.y, V.x);
   }
 
   //r: V with given angle
   setAngle(angle) {
     let V = this.re();
     let l = this.len();
-
     V.x = Math.cos(angle) * l;
     V.y = Math.sin(angle) * l;
     return V;
@@ -96,7 +103,6 @@ class Vector {
     let V = this.re();
     let l = this.len();
     let a = this.angle();
-
     V.x = Math.cos(angle + a) * l;
     V.y = Math.sin(angle + a) * l;
     return V;
@@ -105,7 +111,6 @@ class Vector {
   //r: V or V with (x & y) = smallest positive number if V is (0;0)
   no0() {
     let V = this.re();
-
     if (V == (0, 0)) {
       V.x = Number.MIN_VALUE;
       V.y = Number.MIN_VALUE;
@@ -116,7 +121,6 @@ class Vector {
   //r: V with minimum length of minlen
   min(minlen) {
     let V = this.re();
-
     if (V.len() < minlen) {
       return V.norm().mul(minlen);
     }
@@ -126,7 +130,6 @@ class Vector {
   //r: V with maximum length of maxlen
   max(maxlen) {
     let V = this.re();
-
     if (V.len() > maxlen) {
       return V.norm().mul(maxlen);
     }
@@ -135,13 +138,13 @@ class Vector {
 
   //r: V with len = newLen
   setLen(newLen) {
-    return this.min(newLen).max(newLen);
+    let V = this.re();
+    return V.min(newLen).max(newLen);
   }
 
   //r: V with x clamped to an interval
   clampX(minX, maxX) {
     let V = this.re();
-
     if (V.x < minX) {
       V.x = minX;
     } else if (V.x > maxX) {
@@ -153,7 +156,6 @@ class Vector {
   //r: V with y clamped to an interval
   clampY(minY, maxY) {
     let V = this.re();
-
     if (V.y < minY) {
       V.y = minY;
     } else {
@@ -164,17 +166,20 @@ class Vector {
 
   //r: V with minlen < len < maxlen
   clampLen(minLen, maxLen) {
-    return this.min(minLen).max(maxLen);
+    let V = this.re();
+    return V.min(minLen).max(maxLen);
   }
 
   //r: a Vector that looks from V to vec
   vectorTo(vec) {
-    return vec.sub(this);
+    let V = this.re();
+    return vec.sub(V);
   }
 
   //r: distance from V to vec
   distance_to(vec) {
-    return this.vectorTo(vec).len();
+    let V = this.re();
+    return V.vectorTo(vec).len();
   }
 
   // shorthand for writing operations nicer.

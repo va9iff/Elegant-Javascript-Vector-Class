@@ -5,140 +5,147 @@ class Vector {
     this.y = y || 0;
   }
 
-  // adds vec to this
-  add(vec) {
-    return new Vector(this.x + vec.x, this.y + vec.y);
+  // V = a new Vector that is equal to "this"
+  // r = return value
+
+  //r: V
+  reconstruct() {
+    return new Vector(this.x, this.y);
   }
 
-  // subtracts vec from this
+  //r: V added vec
+  add(vec) {
+    return new Vector(this.x + vec.x, this.y + vec.y);
+    // not modifying this.x or this.y. returns a new Vector
+  }
+
+  //r: V subtracted vec
   sub(vec) {
     return new Vector(this.x - vec.x, this.y - vec.y);
   }
 
-  // multiplies this to num
+  //r: V multiplied with num
   mul(num) {
     return new Vector(this.x * num, this.y * num);
   }
 
-  // devid this to num
+  //r: V devided to num
   div(num) {
     return new Vector(this.x / num, this.y / num);
   }
 
-  // length of this
+  //r: V's length
   len() {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
   }
 
-  // length square of this
+  //r: V's length square
   lensq() {
     return Math.pow(this.x, 2) + Math.pow(this.y, 2);
   }
 
-  // reduce its length to 1
+  //r: V with length = 1
   norm() {
     return this.div(this.len());
   }
 
-  // dot product
+  //r: dot product of V and vec
   dot(vec) {
     return this.x * vec.x + this.y * vec.y;
   }
 
-  // cross product
+  //r: cross product of V and vec
   cross(vec) {
     return this.x * vec.y - this.y * vec.x;
   }
 
-  // ortogonal projection (soon)
+  //r: projection V onto vec
   projectTo(vec) {
     return vec.norm().mul(this.dot(vec.norm()));
     // return b.mul(this.dot(b) / b.dot(b)); //is also valid
   }
 
-  // return the angle of this in radians
+  //r: angle of V in radians
   angle() {
     return Math.atan2(this.y, this.x);
   }
 
-  // set the angle of this in radians
+  //r: V with given angle
   setAngle(angle) {
-    let l = this.len();
-    this.x = Math.cos(angle) * l;
-    this.y = Math.sin(angle) * l;
-    return this;
+    let l = this.len(); // for multiple use
+    return new Vector(Math.cos(angle) * l, Math.sin(angle) * l);
   }
 
-  // rotate as angle with radians
+  //r: V rotated by angle
   rotate(angle) {
     let l = this.len();
     let a = this.angle();
-    this.x = Math.cos(angle + a) * l;
-    this.y = Math.sin(angle + a) * l;
-    return this;
+    return new Vector(Math.cos(angle + a) * l, Math.sin(angle + a) * l);
   }
 
-  // returns smallest positive (x and y) vector if length is 0
+  //r: V with x and y equal to smalles positive number
   no0() {
     if (this.len() == 0) {
-      this.x = Number.MIN_VALUE;
-      this.y = Number.MIN_VALUE;
+      return new Vector(Number.MIN_VALUE, Number.MIN_VALUE);
+    } else {
+      return this.reconstruct();
     }
-    return this;
   }
 
-  //rise its len to minlen
+  //r: V with minimum length of minlen
   min(minlen) {
     if (this.len() < minlen) {
       return this.norm().mul(minlen);
     }
-    return this;
+    return this.reconstruct();
   }
 
-  //lower its len to maxlen
+  //r: V with maximum length of maxlen
   max(maxlen) {
     if (this.len() > maxlen) {
       return this.norm().mul(maxlen);
     }
-    return this;
+    return this.reconstruct();
   }
 
-  // return a vector with given len
+  //r: V with len = newLen
   setLen(newLen) {
     return this.min(newLen).max(newLen);
   }
 
-  // clamps x to an interval
+  // clamp V's x to an interval r: V
   clampX(minX, maxX) {
-    if (this.x < minX) {
-      this.x = minX;
-    } else if (this.x > maxX) {
-      this.x = maxX;
+    xclamped = this.reconstruct();
+    if (xclamped.x < minX) {
+      xclamped.x = minX;
+    } else if (xclamped.x > maxX) {
+      xclamped.x = maxX;
     }
-    return this;
+    return xclamped;
   }
 
-  // clamps y to an interval
+  // clamp V's y to an interval r: V
   clampY(minY, maxY) {
-    if (this.y < minY) {
-      this.y = minY;
-    } else if (this.y > maxY) {
-      this.y = maxY;
+    yclamped = this.reconstruct();
+    if (yclamped.y < minY) {
+      yclamped.y = minY;
+    } else if (yclamped.y > maxY) {
+      yclamped.y = maxY;
     }
-    return this;
+    return yclamped;
   }
 
-  // shorthand for .min().max()
+  //r: V with minlen < len < maxlen
   clampLen(minLen, maxLen) {
     return this.min(minLen).max(maxLen);
   }
 
-  // returns vector to given vector
+  //r: a Vector that looks from V to vec
   vectorTo(vec) {
     return vec.sub(this);
   }
 
-  // returns distance to vec
+  //r: distance from V to vec
   distance_to(vec) {
     return this.vectorTo(vec).len();
   }
@@ -159,10 +166,11 @@ class Vector {
   }
   // we can also use other functions with names like
   // u.op("setAngle", Math.PI / 4); u.op("len", null);
-  // but can make you confused with argument counts. avoid to using like this.
+  // but can make you confused with argument counts. avoid using like this.
 }
 
 // making math function accessable with [" "]
+// eg: u["*"](4)["+"](v)
 Vector.prototype["+"] = function (arg) {
   return this.add(arg);
 };
@@ -175,7 +183,6 @@ Vector.prototype["*"] = function (arg) {
 Vector.prototype["/"] = function (arg) {
   return this.div(arg);
 };
-// eg: u["*"](4)["+"](v)
 
 //
 //

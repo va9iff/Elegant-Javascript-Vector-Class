@@ -1,5 +1,3 @@
-// not tested every function after huge new V update
-
 class Vector {
   // takes x and y. if aren't passed, take as 0
   constructor(x, y) {
@@ -62,6 +60,7 @@ class Vector {
   //r: V with length = 1
   norm() {
     let V = this.re();
+    if (!this.len()) return V;
     return V.div(V.len());
   }
 
@@ -89,17 +88,18 @@ class Vector {
     return Math.atan2(V.y, V.x);
   }
 
-  //r: V with given angle
+  //r: V with given angle in radians
   setAngle(angle) {
     let V = this.re();
     let l = V.len();
-    V.x = Math.cos(angle) * l;
-    V.y = Math.sin(angle) * l;
+    let a = angle || V.angle();
+    V.x = Math.cos(a) * l;
+    V.y = Math.sin(a) * l;
     return V;
   }
 
   //r: V rotated by angle
-  rotate(angle) {
+  rotate(angle = 0) {
     let V = this.re();
     let l = V.len();
     let a = V.angle();
@@ -121,6 +121,7 @@ class Vector {
   //r: V with minimum length of minlen
   min(minlen) {
     let V = this.re();
+    minlen = minlen || V.len();
     if (V.len() < minlen) {
       return V.norm().mul(minlen);
     }
@@ -147,7 +148,7 @@ class Vector {
     let V = this.re();
     if (V.x < minX) {
       V.x = minX;
-    } else if (V.x > maxX) {
+    } else {
       V.x = maxX;
     }
     return V;
@@ -177,7 +178,7 @@ class Vector {
   }
 
   //r: distance from V to vec
-  distance_to(vec) {
+  distanceTo(vec) {
     let V = this.re();
     return V.vectorTo(vec).len();
   }

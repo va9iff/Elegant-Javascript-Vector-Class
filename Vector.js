@@ -1,3 +1,17 @@
+// u * (u + v);
+// need to be
+// (1;1) * | (1;1) + (2;0) | = (1;1) * | (3;4) | = (1;1) * 5 = (5;5)
+
+// but if we modify "this", it goes like that
+// (1;1) * | (1;1) + (2;0) | = (3;4) * |(3;4)| = (3;4) * 5 = (15;20)
+// ^^^^^  !!!!!!!!!!!    ^^^^^
+// adding (2;0) to (1;1) changes (1;1) everywhere
+
+// so, we shouldn't modify "this"
+// eg: NO this.x = this.x+vec.x;
+// eg: YES V=this.re(); V.x=V.x+vec.x return V
+// a = u.mul(u.add(v).len()); log(a);
+
 class Vector {
   // takes x and y. if aren't passed, take as 0
   constructor(x, y) {

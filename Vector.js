@@ -50,20 +50,31 @@ class Vector {
     return this.x * vec.y - this.y * vec.x;
   }
 
+  // ortogonal projection (soon)
+
   // return the angle of this in radians
-  direction() {
+  angle() {
     return Math.atan2(this.y, this.x);
   }
 
-  // set the direction of this in radians
-  setDirection(direction) {
+  // set the angle of this in radians
+  setAngle(angle) {
     let l = this.len();
-    this.x = Math.cos(direction) * l;
-    this.y = Math.sin(direction) * l;
+    this.x = Math.cos(angle) * l;
+    this.y = Math.sin(angle) * l;
     return this;
   }
 
-  // returns smallest positive (y and x) vector if length is 0
+  // rotate as angle with radians
+  rotate(angle) {
+    let l = this.len();
+    let a = this.angle();
+    this.x = Math.cos(angle + a) * l;
+    this.y = Math.sin(angle + a) * l;
+    return this;
+  }
+
+  // returns smallest positive (x and y) vector if length is 0
   no0() {
     if (this.len() == 0) {
       this.x = Number.MIN_VALUE;
@@ -80,7 +91,7 @@ class Vector {
     return this;
   }
 
-  //rise its len to minlen
+  //lower its len to maxlen
   max(maxlen) {
     if (this.len() > maxlen) {
       return this.norm().mul(maxlen);
@@ -122,8 +133,42 @@ class Vector {
   distance_to(vec) {
     return this.vectorTo(vec).len();
   }
+
+  // shorthand for writing operations nicer.
+  // takes operation type in odds, argument in evens.
+  // eg: u.op("*", 4, "+", new Vector(9, 0), "/", v.len())
+  // is same with u.mul(4).add(new Vector(9, 0)).div(v.len()).
+  op() {
+    let oplist = arguments; // arguments given to the function
+    let opresult = this;
+    for (let index = 0; index < oplist.length; index += 2) {
+      let op_type = oplist[index];
+      let arg_to_op = oplist[index + 1];
+      opresult = opresult[op_type](arg_to_op);
+    }
+    return opresult;
+  }
+  // we can also use other functions with names like
+  // u.op("setAngle", Math.PI / 4); u.op("len", null);
+  // but can make you confused with argument counts. so, use with maths.
 }
 
-// export { Vector };
+// making math function accessable with [" "]
+Vector.prototype["+"] = function (arg) {
+  return this.add(arg);
+};
+Vector.prototype["-"] = function (arg) {
+  return this.sub(arg);
+};
+Vector.prototype["*"] = function (arg) {
+  return this.mul(arg);
+};
+Vector.prototype["/"] = function (arg) {
+  return this.div(arg);
+};
+// eg: u["*"](4)["+"](v)
 
+//
+//
+// export { Vector };
 // import { Vector } from "./vector.js"; //include this in your fike

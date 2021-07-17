@@ -60,26 +60,22 @@ class Vector {
 
   //r: dot product of V and vec
   dot(vec) {
-    this.x * vec.x + this.y * vec.y;
-    return this;
+    return this.x * vec.x + this.y * vec.y;
   }
 
   //r: cross product of V and vec
   cross(vec) {
-    this.x * vec.y - this.y * vec.x;
-    return this;
+    return this.x * vec.y - this.y * vec.x;
   }
 
   //r: projection V onto vec
   projectTo(vec) {
-    vec.norm().mul(this.dot(vec.norm()));
-    return this;
+    return vec.norm().mul(this.dot(vec.norm()));
   }
 
   //r: angle of V in radians
   angle() {
-    Math.atan2(this.y, this.x);
-    return this;
+    return Math.atan2(this.y, this.x);
   }
 
   //r: V with given angle in radians
@@ -160,14 +156,12 @@ class Vector {
 
   //r: a Vector that looks from V to vec
   vectorTo(vec) {
-    vec.sub(this);
-    return this;
+    return vec.sub(this);
   }
 
   //r: distance from V to vec
   distanceTo(vec) {
-    this.vectorTo(vec).len();
-    return this;
+    return this.vectorTo(vec).len();
   }
 
   // shorthand for writing operations nicer.

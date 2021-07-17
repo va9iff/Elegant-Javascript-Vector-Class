@@ -205,6 +205,8 @@ Vector.prototype["/"] = function () {
   return this.re().div(...arguments);
 };
 
+var V = (x, y) => new Vector(x, y);
+
 //
 //
 // export { Vector };

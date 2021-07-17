@@ -15,15 +15,15 @@ class Vector {
 
   //r: V added vec
   add(vecOrX = 0, maybeY = 0) {
-    this.x += vecOrX.x || vecOrX;
-    this.y += vecOrX.y || maybeY;
+    this.x += vecOrX.x;
+    this.y += vecOrX.y;
     return this;
   }
 
   //r: V subtracted vec
   sub(vecOrX = 0, maybeY = 0) {
-    this.x -= vecOrX.x || vecOrX;
-    this.y -= vecOrX.y || maybeY;
+    this.x -= vecOrX.x;
+    this.y -= vecOrX.y;
     return this;
   }
 

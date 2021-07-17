@@ -156,10 +156,10 @@ class Vector {
 
   //r: invert the value when you get out of a box for a defined vector
   boxedFor(dependendVec, boxX, boxY) {
-    if (this.x < 0) dependendVec.x = Math.abs(dependendVec.x);
-    if (this.y < 0) dependendVec.y = Math.abs(dependendVec.y);
-    if (this.x > window.innerWidth) dependendVec.x = -1 * Math.abs(dependendVec.x);
-    if (this.y > window.innerHeight) dependendVec.y = -1 * Math.abs(dependendVec.y);
+    if (this.x < boxX[0]) dependendVec.x = Math.abs(dependendVec.x);
+    if (this.y < boxX[1]) dependendVec.y = Math.abs(dependendVec.y);
+    if (this.x > boxY[0]) dependendVec.x = -1 * Math.abs(dependendVec.x);
+    if (this.y > boxY[1]) dependendVec.y = -1 * Math.abs(dependendVec.y);
 
     return this;
   }

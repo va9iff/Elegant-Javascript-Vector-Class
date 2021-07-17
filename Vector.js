@@ -15,172 +15,159 @@ class Vector {
 
   //r: V added vec
   add(vecOrX = 0, maybeY = 0) {
-    let V = this.re();
-    V.x += vecOrX.x || vecOrX;
-    V.y += vecOrX.y || maybeY;
-    return V;
+    this.x += vecOrX.x || vecOrX;
+    this.y += vecOrX.y || maybeY;
+    return this;
   }
 
   //r: V subtracted vec
   sub(vecOrX = 0, maybeY = 0) {
-    let V = this.re();
-    V.x -= vecOrX.x || vecOrX;
-    V.y -= vecOrX.y || maybeY;
-    return V;
+    this.x -= vecOrX.x || vecOrX;
+    this.y -= vecOrX.y || maybeY;
+    return this;
   }
 
   //r: V multiplied with num
   mul(num = 1) {
-    let V = this.re();
-    V.x *= num;
-    V.y *= num;
-    return V;
+    this.x *= num;
+    this.y *= num;
+    return this;
   }
 
   //r: V devided to num
   div(num = 1) {
-    let V = this.re();
-    V.x /= num;
-    V.y /= num;
-    return V;
+    this.x /= num;
+    this.y /= num;
+    return this;
   }
 
   //r: V's length
   len() {
-    let V = this.re();
-    return Math.sqrt(Math.pow(V.x, 2) + Math.pow(V.y, 2));
+    return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
   }
 
   //r: V's length square
   lensq() {
-    let V = this.re();
-    return Math.pow(V.x, 2) + Math.pow(V.y, 2);
+    return Math.pow(this.x, 2) + Math.pow(this.y, 2);
   }
 
   //r: V with length = 1
   norm() {
-    let V = this.re();
-    if (!this.len()) return V;
-    return V.div(V.len());
+    if (!this.len()) return this; //0 Vector
+    this.div(this.len());
+    return this;
   }
 
   //r: dot product of V and vec
   dot(vec) {
-    let V = this.re();
-    return V.x * vec.x + V.y * vec.y;
+    this.x * vec.x + this.y * vec.y;
+    return this;
   }
 
   //r: cross product of V and vec
   cross(vec) {
-    let V = this.re();
-    return V.x * vec.y - V.y * vec.x;
+    this.x * vec.y - this.y * vec.x;
+    return this;
   }
 
   //r: projection V onto vec
   projectTo(vec) {
-    let V = this.re();
-    return vec.norm().mul(V.dot(vec.norm()));
+    vec.norm().mul(this.dot(vec.norm()));
+    return this;
   }
 
   //r: angle of V in radians
   angle() {
-    let V = this.re();
-    return Math.atan2(V.y, V.x);
+    Math.atan2(this.y, this.x);
+    return this;
   }
 
   //r: V with given angle in radians
   setAngle(angle) {
-    let V = this.re();
-    let l = V.len();
-    let a = angle || V.angle();
-    V.x = Math.cos(a) * l;
-    V.y = Math.sin(a) * l;
-    return V;
+    let l = this.len();
+    let a = angle || this.angle();
+    this.x = Math.cos(a) * l;
+    this.y = Math.sin(a) * l;
+    return this;
   }
 
   //r: V rotated by angle
   rotate(angle = 0) {
-    let V = this.re();
-    let l = V.len();
-    let a = V.angle();
-    V.x = Math.cos(angle + a) * l;
-    V.y = Math.sin(angle + a) * l;
-    return V;
+    let l = this.len();
+    let a = this.angle();
+    this.x = Math.cos(angle + a) * l;
+    this.y = Math.sin(angle + a) * l;
+    return this;
   }
 
   //r: V or V with (x & y) = smallest positive number if V is (0;0)
   no0() {
-    let V = this.re();
     if (V == (0, 0)) {
-      V.x = Number.MIN_VALUE;
-      V.y = Number.MIN_VALUE;
+      this.x = Number.MIN_VALUE;
+      this.y = Number.MIN_VALUE;
     }
-    return V;
+    return this;
   }
 
   //r: V with minimum length of minlen
   min(minlen) {
-    let V = this.re();
-    minlen = minlen || V.len();
-    if (V.len() < minlen) {
-      return V.norm().mul(minlen);
+    minlen = minlen || this.len();
+    if (this.len() < minlen) {
+      return this.norm().mul(minlen);
     }
-    return V;
+    return this;
   }
 
   //r: V with maximum length of maxlen
   max(maxlen) {
-    let V = this.re();
-    if (V.len() > maxlen) {
-      return V.norm().mul(maxlen);
+    if (this.len() > maxlen) {
+      return this.norm().mul(maxlen);
     }
-    return V;
+    return this;
   }
 
   //r: V with len = newLen
   setLen(newLen) {
-    let V = this.re();
-    return V.min(newLen).max(newLen);
+    this.min(newLen).max(newLen);
+    return this;
   }
 
   //r: V with x clamped to an interval
   clampX(minX, maxX) {
-    let V = this.re();
-    if (V.x < minX) {
-      V.x = minX;
+    if (this.x < minX) {
+      this.x = minX;
     } else {
-      V.x = maxX;
+      this.x = maxX;
     }
-    return V;
+    return this;
   }
 
   //r: V with y clamped to an interval
   clampY(minY, maxY) {
-    let V = this.re();
-    if (V.y < minY) {
-      V.y = minY;
+    if (this.y < minY) {
+      this.y = minY;
     } else {
-      V.y = maxY;
+      this.y = maxY;
     }
-    return V;
+    return this;
   }
 
   //r: V with minlen < len < maxlen
   clampLen(minLen, maxLen) {
-    let V = this.re();
-    return V.min(minLen).max(maxLen);
+    this.min(minLen).max(maxLen);
+    return this;
   }
 
   //r: a Vector that looks from V to vec
   vectorTo(vec) {
-    let V = this.re();
-    return vec.sub(V);
+    vec.sub(this);
+    return this;
   }
 
   //r: distance from V to vec
   distanceTo(vec) {
-    let V = this.re();
-    return V.vectorTo(vec).len();
+    this.vectorTo(vec).len();
+    return this;
   }
 
   // shorthand for writing operations nicer.
@@ -206,16 +193,16 @@ class Vector {
 // eg: a = u["+"](v)["-"](9, 8)["*"](4);
 
 Vector.prototype["+"] = function () {
-  return this.add(...arguments);
+  return this.re().add(...arguments);
 };
 Vector.prototype["-"] = function () {
-  return this.sub(...arguments);
+  return this.re().sub(...arguments);
 };
 Vector.prototype["*"] = function () {
-  return this.mul(...arguments);
+  return this.re().mul(...arguments);
 };
-Vector.prototype["/"] = function (...arguments) {
-  return this.div(arg);
+Vector.prototype["/"] = function () {
+  return this.re().div(...arguments);
 };
 
 //

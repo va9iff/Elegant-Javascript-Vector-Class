@@ -5,13 +5,11 @@
 // l = V(5,8)["+"](s)["*"](3).len()
 // functions go from left to right. so, ["*"] isn't called first
 
-// different from .add(), it auto generates new Vector and doesn't modify 'this'
+// different from .add(), it generates new Vector and doesn't modify 'this'
 
 // u = V(10,10)
 // u["+"](5,5) // gives 15;15, but u is 10;10
 // u.add(5,5)  // u is 15,15, and returns u
-
-// it is like a methematical expression. you can u = u["+"](v)
 
 class Vector {
   // takes x and y. if aren't passed, take as 0

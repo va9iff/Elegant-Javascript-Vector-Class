@@ -154,28 +154,6 @@ class Vector {
     return this;
   }
 
-  //r: invert the value when you get out of a box for a defined vector
-  boxedFor(dependendVec, boxX, boxY) {
-    if (this.x < boxX[0]) {
-      dependendVec.x = Math.abs(dependendVec.x);
-      this.x = boxX[0];
-    }
-    if (this.y < boxY[0]) {
-      dependendVec.y = Math.abs(dependendVec.y);
-      this.y = boxY[0];
-    }
-    if (this.x > boxX[1]) {
-      dependendVec.x = -1 * Math.abs(dependendVec.x);
-      this.x = boxX[1];
-    }
-    if (this.y > boxY[1]) {
-      dependendVec.y = -1 * Math.abs(dependendVec.y);
-      this.y = boxY[1];
-    }
-
-    return this;
-  }
-
   //r: a Vector that looks from V to vec
   vectorTo(vec) {
     return vec.sub(this);

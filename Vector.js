@@ -1,4 +1,4 @@
-// ELEGANT EXAMPLES
+// EXAMPLES
 
 // a = u["+"](v)["-"](p)["*"](4);
 
